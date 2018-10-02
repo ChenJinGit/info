@@ -1,11 +1,14 @@
-from flask import Flask
+from info import create_app
+from flask_script import Manager
+from flask_migrate import MigrateCommand
 
-app = Flask(__name__)
+# 调用工厂函数创建app
+app = create_app('development')
 
+# 数据库迁移管理
+manage = Manager(app)
 
-@app.route('/')
-def index():
-    return 'HelloWorld'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    print(app.url_map)
+    app.run()

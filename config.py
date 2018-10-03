@@ -33,5 +33,5 @@ class ProductionConfig(Config):
 # 定义配置字典
 config = {
     "development": DevelopementConfig,
-    "production": ProductionConfig
+    "production": ProductionConfig,
 }

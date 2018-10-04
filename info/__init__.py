@@ -8,6 +8,7 @@ import logging
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import generate_csrf
 
+
 # 设置日志的记录等级
 logging.basicConfig(level=logging.DEBUG)  # 调试debug级
 # 创建日志记录器，指明日志保存的路径、每个日志文件的最大大小、保存的日志文件个数上限
@@ -41,6 +42,10 @@ def create_app(config_name):
     # session实例
     Session(app)
 
+    # 注册过滤器
+    from info.utils.common import index_class
+    app.add_template_filter(index_class, 'indexClass')
+
     # 请求钩子实现csrf_token
     @app.after_request
     def after_request(response):
@@ -52,8 +57,11 @@ def create_app(config_name):
     # 注册首页蓝图
     from .modules.news.views import news_blue
     app.register_blueprint(news_blue)
-    # 图片验证码
+    # 图片验证码,新闻首页，详情页，用户登陆模块蓝图
     from .modules.passport.views import passport_blue
     app.register_blueprint(passport_blue)
+    # 用户个人中心模块蓝图
+    from .modules.profile.views import profile_blue
+    app.register_blueprint(profile_blue)
 
     return app
